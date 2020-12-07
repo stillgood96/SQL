@@ -67,9 +67,9 @@ using (location_id)
 where commission_pct is not null;
 
 
--- 커미션을 버는 사람들 중 시애틀에 거주하는
+-- 커미션을 버는 사람들 중 시애틀드에 거주하는
 -- 사람들의 LAST_NAME, 부서명, 지역 ID 및
--- 도시 명을 조회하세요
+-- 도시 명을 조회하세요(옥스포드)
 select last_name,department_name,d.location_id,city
 from employees
 left outer join departments d on employees.department_id = d.department_id
