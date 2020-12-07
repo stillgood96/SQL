@@ -2,7 +2,11 @@
 -- 여러 개의 테이블을 결합해서
 -- 원하는 데이터를 검색하는 것
 -- 다중 테이블을 대상으로 하는 연산
--- 조인 방법 : inner join , outer join(left,right), self join
+-- 조인 방법 :
+-- cross join : cartesian product
+-- inner join : 조건에 맞는 값만 가져옴
+-- outer join : 조건에 맞지 않은 값도 가져옴
+-- self  join : 자기자신을 대상으로 조인 수행
 
 
 --     ---------inner join----------
@@ -70,6 +74,12 @@ from orderTest ot
          inner join productTest pT
          on ot.csid = cT.csid
          and ot.pdNum = pT.pdNum
+where csname = '고명석';
+
+select csname, pdName
+from orderTest ot
+inner join customerTest ct using(csid)
+inner join productTest pt using(pdNum)
 where csname = '고명석';
 
 
