@@ -188,12 +188,26 @@ FROM bookOrders
 INNER JOIN bookMembers ON bookOrders.custid = bookMembers.custid
 order by custid asc, saleprice desc;
 
+-- 선생님 VER
+select custid , name, saleprice,address
+from bookOrders bO
+inner join bookMembers bM using(custid);
+
+
+
 -- 15b) 박지성 고객의 주문금액,주소,주문일자를 조회하세요
 SELECT bookOrders.custid,name,saleprice,address,orderdate
 FROM bookOrders
          INNER JOIN bookMembers ON bookOrders.custid = bookMembers.custid
 where name='박지성'
 order by custid asc, saleprice desc;
+
+-- 선생님 ver
+select saleprice, address,orderdate
+from bookOrders bO
+inner join bookMembers bM using(custid)
+where name= '박지성';
+
 
 -- 16) 주문한 도서이름,주문금액,주문일자를 조회하세요
 select orderid,bookname,saleprice,orderdate
@@ -202,16 +216,71 @@ inner join books on books.bookid=bookOrders.bookid
 order by orderid asc;
 
 
+-- 선생님 ver
+select bookname,saleprice,orderdate
+from bookOrders o inner join books
+using(bookid);
+
+
 
 
 -- 19) 가격이 20000인 도서를 주문한 고객 이름 조회하세요
 select name
 from bookOrders
 inner join bookMembers on bookOrders.custid=bookMembers.custid
-where saleprice =20000;
+where saleprice=20000;
+
+
+-- 선생님 ver
+select name, saleprice
+from bookOrders o inner join bookMembers bM
+using(custid)
+where saleprice=20000;
+
+
+-- 20) 주문한 고개이름, 도서이름, 주문일자 출력하세요
+-- 도서/고객 테이블과 주문테이블을 결합해야 조회가능
+-- 즉, 외래키 관계에 있는 컬럼을 대상으로 결합
+-- 이문제가 복사한 파일에는 날라가있어서 없었음 그래서 풀어주시는거 보면서
+-- 적음
+
+-- 선생님 ver
+select name, bookname,orderdate
+from bookOrders o inner join books b
+using (bookid)
+inner join bookMembers bM
+using (custid);
 
 -- 21) 도서를 구매하지 않은 고객을 포함하여
 --    고객이름과 주문한 도서의 판매금액을 조회하세요
+
+-- 주문 + 고객 inner join : 교집합
+-- => 주문한 상품과 주문한 고객에 대한 정보
+
+-- 주문 + 고객 outer join : 차집합
+-- => 주문이 안된 상품과 주문하지 않은 고객
+
+-- 도서를 구매한 고객 (inner join)
+select orderid, name
+from bookOrders o inner join bookMembers m
+using(custid);
+
+-- 도서를 구매한 고객 + 도서를 구매하지 않은 고객
+select name,orderid
+from bookOrders o right outer join bookMembers bM
+using(custid)
+where orderid is null;
+
+
+
+-- 주문 된 도서 + 주문되지 않은 도서
+select orderid,bookname
+from bookOrders o right outer join books bo
+using(bookid);
+
+
+-- 내가 쓴 ver
 select name,saleprice
 from bookMembers
 left outer join bookOrders bO on bookMembers.custid = bO.custid;
+
