@@ -107,6 +107,21 @@ from employees
 inner join departments d on employees.department_id = d.department_id
 group by d.department_id;
 
+-- 수업ver
+select department_id,count(employee_id) from employees
+group by department_id
+having department_id is not null;
+
+select department_name,count(employee_id);
+from employees e join departments d
+using (department_id)
+group by department_name;
+
+select department_name,count(employee_id)
+from employees e join departments d on e.department_id = d.department_id
+group by department_name;
+
+
 
 
 
@@ -120,4 +135,18 @@ group by d.department_id
 having count(employee_id)>=0;
 -- 못품
 
+-- 수업 ver
 
+--  부서가 없는 사원 조회
+select department_name,count(employee_id)
+from employees e left outer join departments d using(department_id)
+group by department_name;
+
+
+
+
+-- 사원이 없는 부서 조회
+select department_name,count(employee_id) 사원수
+from employees e right outer join departments d using(department_id)
+group by department_name
+order by 사원수 desc;
