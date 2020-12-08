@@ -86,18 +86,29 @@ using (location_id)
 where commission_pct is not null and l.city ='Seattle';
 
 
+-- 자신의 매니저의 이름과 고용일을 조회하세요
+select emp.last_name 사원명,
+       mgr.last_name 매니저명,
+       mgr.hire_date '매니저 입사일'
+from employees mgr join employees emp
+on emp.manager_id=mgr.employee_id;
 
 -- 자신의 매니저보다 먼저 고용된 사원들의
 -- LAST_NAME 및 고용일을 조회하세요.
-select distinct e.last_name,e.hire_date
+select distinct d.last_name,d.hire_date,e.last_name,e.hire_date
 from employees e
 inner join employees d on d.manager_id=e.employee_id
 where d.hire_date>e.hire_date;
 
+-- 수업ver
 select
-from employees
-
--- 못품
+emp.last_name 사원명,
+emp.hire_date 사원입사일,
+mgr.last_name 매니저명,
+mgr.hire_date 매니저입사일
+from employees mgr inner join employees emp
+on emp.manager_id=mgr.employee_id
+where emp.hire_date < mgr.hire_date;
 
 
 -- 부서별 사원수를 조회하세요
