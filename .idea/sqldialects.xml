@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/playground5(서브쿼리)(DML-update).sql" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/playground7(내장함수).sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/sql문법 수업내용.sql" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/연습문제 B3.sql" dialect="GenericSQL" />
   </component>
