@@ -33,6 +33,9 @@ create view 우수고객 as
 select csid,csname,age from customerTest
 where grd ='vip';
 
+alter view 우수고객 as select csid,csname from customerTest
+where grd='vip';
+
 -- 뷰 출력
 select * from 우수고객;
 
@@ -125,6 +128,7 @@ select * from orderTest ot join productTest pt using(pdNum)
                            join customerTest ct using(csid);
 
 select pdName from 판매데이터 where csid='banana';
+select pdName from 판매데이터 where csname='김선우';
 
 -- 선생님ver
 create view 판매데이터 as
