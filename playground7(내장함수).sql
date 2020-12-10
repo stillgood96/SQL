@@ -41,7 +41,7 @@ group by custid;
 
 
 -- 나머지 연산 : mod(분자,분모)
-select mod(10,5),mod(10,3);
+select mod(10,5),mod(10,3); -- 0 / 1 출력확인
 
 -- 난수 생성 : random (0~1사이 실수값이 출력이 된다)
 select rand(), rand()*10, rand()*100;
@@ -56,6 +56,8 @@ select round(rand()*10,0), ceil(rand()*10),
 -- 1~2사이 임의의 정수 생성
 select floor(1+rand()*(2-1+1));
 select floor (1+rand()*2);
+select floor(4+rand()*(14-4+1));
+
 
 
 -- ex) 1~45 사이 임의의 정수 생성
@@ -78,12 +80,12 @@ select char(97),char(65),char(48);
 -- 영문자 : 1byte
 -- 윈도우코드 (완성형,조합형,euc-kr,win949) : 2byte (특정국가내에서만 사용 할 수 이쓴 그래서 바이트를 더쓰더라도 유니코드가 낫다)
 -- 유니코드 : 3byte
-select length('Hello, World!!');
-select length('가나다라마바');
+select length('Hello, World!!');  -- 14 출력확인
+select length('가나다라마바');      -- 18 출력확인
 
 
 -- 문자열 연결 : concat(문자열1,문자열2,....);
-select concat('Hello',',World','!!');
+select concat('Hello',',World','!!'); -- Hello,World!! 출력확인
 
 -- bookMembers 테이블의 이름과 주소, 전화번호등을
 -- 다음과 같은 형식으로 출력되도록 질의문을 작성하세요
@@ -98,10 +100,10 @@ from bookMembers;
 -- 문자열 추출 : left(문자열, 길이), right(문자열, 길이),
 --              mid(문자열, 시작, 길이) 시작=1
 --              substring, substr = 나중에 찾아보기
-select left('Hello,World',5);
-select right('Hello,World',5);
-select mid('Hello,World',1,5);
-select mid('123456-1234567',8,1);
+select left('Hello,World',5); -- Hello 출력확인
+select right('Hello,World',5);-- World 출력확인
+select mid('Hello,World',1,5);-- Hello 출력확인
+select mid('123456-1234567',8,1);-- 1 출력확인
 
 select right('가나다라마바사',3);
 select left('가나다라마바사',3);
@@ -110,16 +112,17 @@ select mid('가나다라마바사',3,1);
 -- 고급 문자열 추출 : substring(문자열, 시작, 길이);
 --                  substring(문자열, 시작)
 
-SELECT SUBSTRING('Quadratically',5); -- 'ratically'
-SELECT SUBSTRING('foobarbar' FROM 4); -- 'barbar'
-SELECT SUBSTRING('Quadratically',5,6); -- 'ratica'
-SELECT SUBSTRING('Sakila', -3); -- 'ila'
+
+SELECT SUBSTR('foobarbar' FROM 4); -- 'barbar'
+SELECT SUBSTR('Quadratically',5,6); -- 'ratica'
+SELECT SUBSTR('Sakila', -3); -- 'ila'
 SELECT SUBSTRING('Sakila', -5, 3); -- 'aki'
 SELECT SUBSTRING('Sakila' FROM -4 FOR 2); -- 'ki'
+SELECT SUBSTRING('Quadratically',5); -- 'ratically'
 
 -- 대소문자 변환 :upper, lower, ucase, lcase
-select upper('abc'), lower('ABC');
-select ucase('abc'), lcase('ABC');
+select upper('abc'), lower('ABC'); -- ABC , abc 출력확인
+select ucase('abc'), lcase('ABC'); -- ABC , abc 출력확인
 
 -- 공백처리 : trim, ltrim, rtrim
 select trim(' abc '),              -- 앞뒤의 공백을 전부 제거
@@ -129,27 +132,30 @@ select trim(' abc '),              -- 앞뒤의 공백을 전부 제거
 -- 문자열 채움 : pad(문자열, 총길이, 채움문자)
 -- 숫자는 lpad, 문자는 rpad 함수를 이용
 select lpad('1234567890',10,'_'),  -- '_____12345' 열칸중 남는칸은 _을 왼쪽에
-       lpad('12345',10,'_');
+       lpad('12345',10,'_'),
+       rpad('12345',10,'_'),
+       rpad('가나다',10,'_');
 
 select rpad('가나다라마',10,'_'),
        rpad('가나다',10,'_');        -- 한글도 바이트로 인식하지않고 실제 화면 몇자인지
                                     -- 구분해서 한다.
 
 -- 문자열 바꾸기 : replace(문자열, 찾을문자, 바꿀문자)
-select replace('Hello,World','World','mariadb');
-select replace('Hello,World','World',''); -- 공백으로 지울 수도 있다
+select replace('Hello,World','World','mariadb'),
+       replace('Hello,World','World',''); -- 공백으로 지울 수도 있다
 
 -- 문자열 뒤집기 : reverse
 select reverse('12345'), reverse('가나다라마');
 
 -- 문자열 위치찾기 : instr(문자열, 찾을문자열)
 -- 존재하지 않는 경우 : 0으로 출력
-select instr('Hello,World','W');
-select instr('Hello,World','H');
-select instr('Hello,World','!');
+select instr('Hello,World','W'),
+       instr('Hello,World','H'),
+       instr('Hello,World','!');
 
 
 select instr('Hello,World','!');
+
 
 -- 'Hello_World_!!' 에서 2번재 _의 위치를 알고 싶음
 -- 이에; 적적한 질의문은?
@@ -176,9 +182,9 @@ select char_length('가나다_마바사_아자차!')-
 
 -- 너무 복잡하다 한방에 해결하자
 -- 어떻게 ? substring_index함수를 이용하면 편하게 할 수 있다~~ 룰루리
-select substring_index('Hello_World_!!','_',1);
+select substring_index('Hello_World_!!','_',1),
 -- 첫번째 ' _ '로 분리한 문자열을 출력
-select substring_index('Hello_World_!!','_',2);
+       substring_index('Hello_World_!!','_',2);
 -- 두번째 ' _ '로 분리한 문자열을 출력
 select substring_index('Hello_World_!!','_',3);
 
@@ -199,3 +205,77 @@ select length(substring_index('World_of_Warcraft_Shadow_Land','_',3))+1;
 -- 결과적으로 세번째 _ 위치 바로전의 길이값이 뜨니 거기다 +1을 해주면 깔꼼~해진다
 -- 이말입니다 ~ 아시겠습니까~~~?
 
+-- 2020/12/10 문제풀기 및 추가 내장함수 (nullif,ifnull,coalesc
+-- 도서제목에 야구가 포함된 도서를 농구로 변경한 뒤
+-- 변경결과를 확인하세요
+select replace(bookname,'야구','농구') from books where bookname like '%야구%';
+
+-- 수업ver
+select bookid,
+       bookname 변경전결과,
+       replace(bookname,'야구','농구') 변경후제목,
+       publisher, price
+       from books;
+
+
+select *from books;
+
+-- 굿스포츠에서 출판한 도서의 제목과
+-- 제목의 글자수를 조회하세요
+select bookname,length(bookname) 바이트수 ,
+      char_length(replace(bookname,' ','')) 문자수 -- 공백도 숫자 카운트가 들어가므로 공백제거해줘야함
+from books where publisher='굿스포츠';
+
+-- 수업ver
+select bookname, char_length(bookname), length(bookname)
+from books where publisher ='굿스포츠';
+
+-- 고객 중 같은 성을 가진 고객의 수룰 조회하세요요
+select count(name) from bookMembers where substring(name,0,1) = substring(name,0,1);
+
+-- 수업ver
+select name, left(name,1) 성 , right(name,2)
+from bookMembers;
+
+select  left(name,1) 성,count(custid) 고객수
+from bookMembers
+group by 성;
+
+-- 문제가 안풀리면 기초적인 시뮬레이션을 진행하면서 작성해봐라 !
+-- 한번에 작성하면 너무 좋겠지만 힘들수있따 내가 그렇다
+
+
+-- Null 처리함수
+-- null 처리 : coalesce(문자열, 널일때 대체 값)
+select Null, coalesce(Null,'널임'),
+             coalesce('Hello','널임'),
+             IFNULL(Null,'널임'),
+             IFNULL('Hello','널임');
+
+
+-- null 처리 2 : ifnull(문자열,널일때대체값)
+select Null, IFNULL(Null,'널임'),
+       coalesce('Hello','널임');
+
+-- null 처리 : nullif(문자열1, 문자열2)
+-- 두 값이 일치하면 null출력
+-- 두값이 일치하지 않으면 문자열1 을 출력~
+-- oracle : NVL
+
+select nullif(null,'널임'), nullif(null,null),
+       nullif('hello','널임'), nullif('hello','hello');
+
+-- 사원테이블에서 수당을 받지않는 사원들의 수당은 0으로 설정
+select  commission_pct,replace(commission_pct,Null,0) from employees;
+-- replace로도 할 수 있지 않느냐 해서 해보면 안되는거 확인
+-- ifnull을 써써 바궈보장
+select ifnull(commission_pct,0) from employees;
+
+
+-- 조건 판단 :if (조건식, 참일때값, 거짓일때 값)
+select if(5>3,'겁나커요잉~','겁나작아요잉~');
+
+-- 다중 조건 : case when 조건식 then 처리값 or else 처리값 or 처리값 end
+-- 이부분의 예제는 쉬는시간에 한번 찾아보자.
+SELECT case when (5>3) then '겁나커요이잉~' else '겁나작아요이잉~' end,
+       case when (3>3) then '겁나커요이잉~' else '겁나작아요이잉~' end;
