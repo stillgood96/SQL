@@ -262,6 +262,15 @@ select Null, IFNULL(Null,'널임'),
 -- 두값이 일치하지 않으면 문자열1 을 출력~
 -- oracle : NVL
 
+-- coalease vs ifnull
+select ifnull('abc','xyz');
+select ifnull(null,'xyz');
+
+
+select coalesce(null,'xyz'); -- ifnull과 기능유사
+select coalesce(null,'abc','xyz');
+select coalesce(null,null,'abc');
+
 select nullif(null,'널임'), nullif(null,null),
        nullif('hello','널임'), nullif('hello','hello');
 
